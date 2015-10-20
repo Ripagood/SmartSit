@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>6.2</ProjectVersion>
+    <ToolchainName>com.Atmel.AVRGCC8.C</ToolchainName>
+    <ProjectGuid>{eaa51f92-aff9-4d91-bd82-3a34f83bb69a}</ProjectGuid>
+    <avrdevice>ATmega328P</avrdevice>
+    <avrdeviceseries>none</avrdeviceseries>
+    <OutputType>Executable</OutputType>
+    <Language>C</Language>
+    <OutputFileName>$(MSBuildProjectName)</OutputFileName>
+    <OutputFileExtension>.elf</OutputFileExtension>
+    <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
+    <AssemblyName>FreeRTOSatmega328p</AssemblyName>
+    <Name>FreeRTOSatmega328p</Name>
+    <RootNamespace>FreeRTOSatmega328p</RootNamespace>
+    <ToolchainFlavour>Native</ToolchainFlavour>
+    <KeepTimersRunning>true</KeepTimersRunning>
+    <OverrideVtor>false</OverrideVtor>
+    <CacheFlash>true</CacheFlash>
+    <ProgFlashFromRam>true</ProgFlashFromRam>
+    <RamSnippetAddress />
+    <UncachedRange />
+    <OverrideVtorValue />
+    <BootSegment>2</BootSegment>
+    <eraseonlaunchrule>1</eraseonlaunchrule>
+    <AsfFrameworkConfig>
+      <framework-data xmlns="">
+        <options />
+        <configurations />
+        <files />
+        <documentation help="" />
+        <offline-documentation help="" />
+        <dependencies>
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.17.0" />
+        </dependencies>
+      </framework-data>
+    </AsfFrameworkConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <ToolchainSettings>
+      <AvrGcc>
+        <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
+        <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
+        <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
+        <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
+        <avrgcc.common.outputfiles.usersignatures>False</avrgcc.common.outputfiles.usersignatures>
+        <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
+        <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
+        <avrgcc.compiler.symbols.DefSymbols>
+          <ListValues>
+            <Value>NDEBUG</Value>
+          </ListValues>
+        </avrgcc.compiler.symbols.DefSymbols>
+        <avrgcc.compiler.optimization.level>Optimize for size (-Os)</avrgcc.compiler.optimization.level>
+        <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
+        <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
+        <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
+        <avrgcc.linker.libraries.Libraries>
+          <ListValues>
+            <Value>libm</Value>
+          </ListValues>
+        </avrgcc.linker.libraries.Libraries>
+      </AvrGcc>
+    </ToolchainSettings>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <ToolchainSettings>
+      <AvrGcc>
+  <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
+  <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
+  <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
+  <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
+  <avrgcc.common.outputfiles.usersignatures>False</avrgcc.common.outputfiles.usersignatures>
+  <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
+  <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
+  <avrgcc.compiler.symbols.DefSymbols>
+    <ListValues>
+      <Value>DEBUG</Value>
+      <Value>GCC_MEGA_AVR</Value>
+    </ListValues>
+  </avrgcc.compiler.symbols.DefSymbols>
+  <avrgcc.compiler.directories.IncludePaths>
+    <ListValues>
+      <Value>C:\Documents and Settings\Admin\My Documents\Atmel Studio\6.2\FreeRTOSatmega328p\FreeRTOSatmega328p\Source\include</Value>
+    </ListValues>
+  </avrgcc.compiler.directories.IncludePaths>
+  <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
+  <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
+  <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
+  <avrgcc.compiler.optimization.DebugLevel>Default (-g2)</avrgcc.compiler.optimization.DebugLevel>
+  <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
+  <avrgcc.linker.libraries.Libraries>
+    <ListValues>
+      <Value>libm</Value>
+    </ListValues>
+  </avrgcc.linker.libraries.Libraries>
+  <avrgcc.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcc.assembler.debugging.DebugLevel>
+</AvrGcc>
+    </ToolchainSettings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="commTask.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="commTask.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Drivers\BareBones\BareBonesWHT.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Drivers\BareBones\BareBonesWHT.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Drivers\BareBones\hdlc\dn_typedef.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Drivers\BareBones\hdlc\fcs.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Drivers\BareBones\hdlc\fcs.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Drivers\BareBones\hdlc\hdlc.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Drivers\BareBones\hdlc\hdlc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Drivers\LED.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Drivers\LED.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Drivers\serial.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Drivers\serial.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Drivers\TWI_Master.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Drivers\TWI_Master.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="FreeRTOSatmega328p.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="mytasks.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="mytasks.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="sensorTask.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="sensorTask.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SmartSit.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\croutine.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\event_groups.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\include\croutine.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\include\deprecated_definitions.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\include\event_groups.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\include\FreeRTOS.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\include\FreeRTOSConfig.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\include\list.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\include\mpu_wrappers.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\include\portable.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\include\projdefs.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\include\queue.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\include\semphr.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\include\StackMacros.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\include\task.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\include\timers.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\list.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\portable\GCC\ATmega328p\port.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\portable\GCC\ATmega328p\portmacro.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\portable\MemMang\heap_1.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\queue.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\tasks.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Source\timers.c">
+      <SubType>compile</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Drivers" />
+    <Folder Include="Drivers\BareBones" />
+    <Folder Include="Drivers\BareBones\hdlc" />
+    <Folder Include="Source" />
+    <Folder Include="Source\include" />
+    <Folder Include="Source\portable" />
+    <Folder Include="Source\portable\GCC" />
+    <Folder Include="Source\portable\GCC\ATmega328p" />
+    <Folder Include="Source\portable\MemMang" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Source\include\stdint.readme">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Source\readme.txt">
+      <SubType>compile</SubType>
+    </None>
+  </ItemGroup>
+  <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
+</Project>

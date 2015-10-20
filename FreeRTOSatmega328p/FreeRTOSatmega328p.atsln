@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "FreeRTOSatmega328p", "FreeRTOSatmega328p\FreeRTOSatmega328p.cproj", "{EAA51F92-AFF9-4D91-BD82-3A34F83BB69A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EAA51F92-AFF9-4D91-BD82-3A34F83BB69A}.Debug|AVR.ActiveCfg = Debug|AVR
+		{EAA51F92-AFF9-4D91-BD82-3A34F83BB69A}.Debug|AVR.Build.0 = Debug|AVR
+		{EAA51F92-AFF9-4D91-BD82-3A34F83BB69A}.Release|AVR.ActiveCfg = Release|AVR
+		{EAA51F92-AFF9-4D91-BD82-3A34F83BB69A}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
