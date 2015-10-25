@@ -27,10 +27,10 @@ SemaphoreHandle_t dataReadySemaphore; // data ready semaphore
 QueueHandle_t DataToSend;
 
 
-
+TaskHandle_t xSensorHandle;
 void startSensorTasks(UBaseType_t uxPriority){
 	
-	xTaskCreate( xSensorTask,( signed char * ) "Sensor", sensorSTACK_SIZE, NULL, uxPriority, NULL );
+	xTaskCreate( xSensorTask,( signed char * ) "Sensor", sensorSTACK_SIZE, NULL, uxPriority, &xSensorHandle );
 	
 }
 
@@ -79,38 +79,68 @@ void xSensorTask (void* pvParameters){
 	sensorConfig[2]=0x01; // single measurement mode
 	TWI_Start_Transceiver_With_Data(sensorConfig,3);
 	vTaskDelay(100);
+	#ifdef SEND_DEFINED_NUMBER
+	uint16_t messagesSent=0;
+	#endif
+	
 
 	while(1){
 		
+		PORTC &= ~(1<<PORTC1);
 		
-		if (xSemaphoreTake(dataReadySemaphore,0xFFFF))//Block on sensor interrupt
-		{
 			
-			sensorConfig[0]=SLAVE_SENSOR_R;
-			sensorConfig[1]=DATA_OUTPUT_REGISTER; //Start with X MSB register
-			TWI_Start_Transceiver_With_Data(sensorConfig,8); // 2 + 6 bytes to be read
-			vTaskDelay(1);
-			TWI_Get_Data_From_Transceiver(sensorConfig,8);// get the data from the i2c buffer into sensorconfig array
-			
-			for (uint8_t i =0;i<6;i++){
-				sensorData[(messages*NUMBER_OF_BYTES_TO_READ)+i]=sensorConfig[i+2];
+			if (xSemaphoreTake(dataReadySemaphore,0xFFFF))//Block on sensor interrupt
+			{
+				
+				sensorConfig[0]=SLAVE_SENSOR_R;
+				sensorConfig[1]=DATA_OUTPUT_REGISTER; //Start with X MSB register
+				TWI_Start_Transceiver_With_Data(sensorConfig,8); // 2 + 6 bytes to be read
+				vTaskDelay(1);
+				TWI_Get_Data_From_Transceiver(sensorConfig,8);// get the data from the i2c buffer into sensorconfig array
+				
+				for (uint8_t i =0;i<6;i++){
+					sensorData[(messages*NUMBER_OF_BYTES_TO_READ)+i]=sensorConfig[i+2];
+				}
+				messages++;
+				if (messages>=NUMBER_OF_MEASURES){
+					#ifdef SEND_DEFINED_NUMBER
+					messagesSent++;
+					#endif
+					
+					messages=0;
+					sensorData[0]=0x10;
+					pSensorData = sensorData;
+					xQueueSend( DataToSend, (void*) &pSensorData, ( TickType_t ) 0 );
+				}
+				//we must setup the sensor for the next measurement in single measurement mode
+				sensorConfig[0]=SLAVE_SENSOR_W;
+				sensorConfig[1]=MODE_REGISTER;
+				sensorConfig[2]=0x01; // single measurement mode
+				TWI_Start_Transceiver_With_Data(sensorConfig,3);
+				vTaskDelay(1);
+				#ifdef SEND_DEFINED_NUMBER
+				//USED ONLY FOR TESTING PURPOSES, THIS WILL SUSPEND THE SENSOR TASK!
+				if (messagesSent == NUMBER_OF_MESSAGES)
+				{
+					PORTC |= (1<<PORTC1);
+					vTaskSuspend(xSensorHandle);
+				}
+				
+				#endif
+				
+				
 			}
-			messages++;
-			if (messages>=NUMBER_OF_MEASURES){
-				messages=0;
-				sensorData[0]=0x10;
-				pSensorData = sensorData;
-				xQueueSend( DataToSend, (void*) &pSensorData, ( TickType_t ) 0 );
-			}
 			
-			sensorConfig[0]=SLAVE_SENSOR_W;
-			sensorConfig[1]=MODE_REGISTER;
-			sensorConfig[2]=0x01; // single measurement mode
-			TWI_Start_Transceiver_With_Data(sensorConfig,3);
-			vTaskDelay(1);
 			
-		}
+		
+		
+		
+		
+		
 	}
+	
+	
+	
 }
 
 #else
