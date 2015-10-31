@@ -11,7 +11,7 @@ AVR, the BareBones WHT library for communicating with the SmartMesh mote and
 some I2C drivers for interfacing with the magnetic sensor.
 
 ## Overview
-The AVR will sample the magnetic sensor at the highest rate possible (150Hz) 
+The AVR will sample the magnetic sensor at the highest rate possible (160Hz) 
 provided by an external interrupt from the HMC-58853L , then collect a defined
 number of samples on a buffer and send it to the mote wich will then send it to the manager.
 Everything is managed through tasks, queues and semaphores given by the FreeRTOS.
@@ -38,6 +38,14 @@ For a sample, use the following command:
 cat log1Mote5.txt | awk 'BEGIN {FS=","}{print $10; fflush()}' | ./plotting.py | ./driveGnuPlots.pl 3 500 500 500 "X" "Z" "Y"
 
 Click [here](https://youtu.be/uINeaHeTg8o) to see the plot in realtime.
+
+#### Visualization Modes
+
+##### Single Node, 3 Windows for X,Y,Z
+cat log1Mote5.txt | awk 'BEGIN {FS=","}{print $10; fflush()}' | ./plotting.py | ./driveGnuPlots.pl 3 500 500 500 "X" "Z" "Y"
+
+##### Single Node, 1 Window for X,Y,Z
+cat log1Mote5.txt | awk 'BEGIN {FS=","}{print $10; fflush()}' | ./plotting.py | ./driveGnuPlotStreams.pl 3 1 500 -100000 100000 500x300+0+0 'X' 'Y' 'Z' 0 0 0
 
 
 ### Easy Data Acquisition

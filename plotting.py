@@ -2,7 +2,7 @@
 
 import sys
 
-#Run a test with cat log1Mote5.txt | awk 'BEGIN {FS=","}{print $10; fflush()}' | ./plotting.py | ./driveGnuPlots.pl 3 50 50 50 "X" "Z" "Y"
+#Run a test with cat log1Mote5.txt | awk 'BEGIN {FS=","}{print $10; fflush()}' | ./plotting.py | ./driveGnuPlots.pl 3 500 500 50 "X" "Z" "Y"
 
 
 
@@ -30,6 +30,8 @@ def toHex( asciiList ):
 def toInt ( hList ):
     for i in range(0,len(hList)):
 	hList[i]=int(str(hList[i]),16)
+        if hList[i] >= 2**15:
+           hList[i] -= 2**16
     return
 
 def arrangeValues( numList):
@@ -67,8 +69,6 @@ for line in sys.stdin:
            sys.stdout.flush()
            print "2:"+str(Z_values[i])
            sys.stdout.flush()
-
-     
        X_values=[]
        Y_values=[]
        Z_values=[]

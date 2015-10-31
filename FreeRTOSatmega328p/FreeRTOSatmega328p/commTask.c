@@ -62,6 +62,20 @@ void xMoteTask( void* pvParameters){
 		{
 			//The queue is of size 1 and contains the pointer to the data to be sent
 			sendMoteData(datos,NUMBER_OF_BYTES_TO_SEND);
+			
+			
+			/*
+			if (sendMoteData(datos,NUMBER_OF_BYTES_TO_SEND) == 0)
+			{
+				//there are no resources
+				PORTC |= (1<<PORTC1);//signal no resources on led
+				vTaskDelay(2000); //block for a while
+				
+			}else{
+				PORTC &= ~(1<<PORTC1);//everything is OK, turn off LED
+				
+			}*/
+			
 		}
 		
 		

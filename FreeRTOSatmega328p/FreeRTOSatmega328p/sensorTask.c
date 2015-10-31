@@ -66,17 +66,17 @@ void xSensorTask (void* pvParameters){
 	//(8-average, 15 Hz default, normal measurement)
 	sensorConfig[0]=SLAVE_SENSOR_W;
 	sensorConfig[1]=CRA;
-	sensorConfig[2]=0x70;//(8-average, 15 Hz default, normal measurement)
+	sensorConfig[2]=SENSOR_FREQUENCY;
 	TWI_Start_Transceiver_With_Data(sensorConfig,3);
 	vTaskDelay(100);
 	sensorConfig[0]=SLAVE_SENSOR_W;
 	sensorConfig[1]=CRB;
-	sensorConfig[2]= 0xA0; //(Gain=5, or any  other desired gain
+	sensorConfig[2]= SENSOR_GAIN; //(Gain=5, or any  other desired gain
 	TWI_Start_Transceiver_With_Data(sensorConfig,3);
 	vTaskDelay(100);
 	sensorConfig[0]=SLAVE_SENSOR_W;
 	sensorConfig[1]=MODE_REGISTER;
-	sensorConfig[2]=0x01; // single measurement mode
+	sensorConfig[2]=MEASUREMENT_MODE; // single measurement mode or continous
 	TWI_Start_Transceiver_With_Data(sensorConfig,3);
 	vTaskDelay(100);
 	#ifdef SEND_DEFINED_NUMBER
@@ -84,11 +84,12 @@ void xSensorTask (void* pvParameters){
 	#endif
 	
 
+
+	PORTC &= ~(1<<PORTC1); // TURN OFF THE LED
+	
 	while(1){
 		
-		PORTC &= ~(1<<PORTC1);
 		
-			
 			if (xSemaphoreTake(dataReadySemaphore,0xFFFF))//Block on sensor interrupt
 			{
 				
@@ -108,21 +109,22 @@ void xSensorTask (void* pvParameters){
 					#endif
 					
 					messages=0;
-					sensorData[0]=0x10;
-					pSensorData = sensorData;
-					xQueueSend( DataToSend, (void*) &pSensorData, ( TickType_t ) 0 );
+					//sensorData[0]=0x10;
+					pSensorData = sensorData;//send the messages in a queue to commTask
+				    xQueueSend( DataToSend, (void*) &pSensorData, ( TickType_t ) 0 );
+					
 				}
 				//we must setup the sensor for the next measurement in single measurement mode
 				sensorConfig[0]=SLAVE_SENSOR_W;
 				sensorConfig[1]=MODE_REGISTER;
-				sensorConfig[2]=0x01; // single measurement mode
+				sensorConfig[2]=MEASUREMENT_MODE; // single measurement mode
 				TWI_Start_Transceiver_With_Data(sensorConfig,3);
 				vTaskDelay(1);
 				#ifdef SEND_DEFINED_NUMBER
 				//USED ONLY FOR TESTING PURPOSES, THIS WILL SUSPEND THE SENSOR TASK!
 				if (messagesSent == NUMBER_OF_MESSAGES)
 				{
-					PORTC |= (1<<PORTC1);
+					PORTC |= (1<<PORTC1); //TURN ON THE LED
 					vTaskSuspend(xSensorHandle);
 				}
 				
@@ -195,7 +197,10 @@ void xSensorTask (void* pvParameters){
 			messages=0;
 			sensorData[0]=0x10;
 			pSensorData = sensorData;
-			xQueueSend( DataToSend, (void*) &pSensorData, ( TickType_t ) 0 );
+			//xQueueSend( DataToSend, (void*) &pSensorData, ( TickType_t ) 0 );
+			xQueueOverwrite(DataToSend, (void*) &pSensorData);
+			//the queue is of length 1
+			//overwrite if commTask is blocked because of no resources
 		}
 		vTaskDelay(10);
 
