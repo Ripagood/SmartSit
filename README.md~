@@ -60,15 +60,18 @@ project can be used as start point for other wireless sensor network solutions.
 ## To Do
 
 ### Real data throughput rates
-DONE! The WSN can send data at a maximum of 7.2 kbps
+There are still some tests to do regarding the number of motes the WSN will manage
+to serve at the given rate .Even so, the firmware is pretty much ready for a commercial or industrial
+application. I strongly advise to use a much lower sample rate or to lower the amount
+of data to be sent with each mote.
 
 ### Low Power Mode
 In theory really simple, just add an IdleHook function to the RTOS which will then 
 put the AVR on a deep sleep.
 
 ### Demo Video
-DONE! you can check a video my team doing tests with cars [here](https://www.youtube.com/watch?v=HFqusrk0SYE)
-You can also check the Data plotting video [here](https://www.youtube.com/watch?v=uINeaHeTg8o)
+Even though I already have some videos of the system, one with data visualization
+would be much better.
 
 
 
